@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kata-monitor
+  namespace: openshift-sandboxed-containers-operator
+spec:
+  selector:
+    matchLabels:
+      name: kata-monitor
+  template:
+    metadata:
+      labels:
+        name: kata-monitor
+      annotations:
+        prometheus.io/scrape: "true"
+    spec:
+      containers:
+      - name: kata-monitor
+        image: quay.io/fgiudici/kata-monitor:2.1.1
+        args: [ "--log-level=debug", "--runtime-endpoint=/run/crio/crio.sock" ]
+        ports:
+          - containerPort: 8090
+        resources:
+          limits:
+            cpu: 200m
+            memory: 300Mi
+          requests:
+            cpu: 200m
+            memory: 300Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: criosocket
+          mountPath: /run/crio/crio.sock
+          readOnly: false
+        - name: katasbs
+          mountPath: /run/vc/sbs
+          readOnly: true
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: criosocket
+        hostPath:
+          path: /run/crio/crio.sock
+      - name: katasbs
+        hostPath:
+          path: /run/vc/sbs
