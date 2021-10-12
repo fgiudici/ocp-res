@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: kata-monitor
-        image: quay.io/fgiudici/kata-monitor:2.1.1
+        image: quay.io/fgiudici/kata-monitor:latest
         args: [ "--log-level=debug", "--runtime-endpoint=/run/crio/crio.sock" ]
         ports:
           - containerPort: 8090
