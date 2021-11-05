@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: kata-monitor
+  name: openshift-sandboxed-containers-monitor
   namespace: openshift-sandboxed-containers-operator
 spec:
   namespaceSelector:
@@ -9,6 +9,6 @@ spec:
     - openshift-sandboxed-containers-operator
   selector:
     matchLabels:
-      name: kata-monitor
+      name: openshift-sandboxed-containers-monitor
   endpoints:
   - port: metrics
