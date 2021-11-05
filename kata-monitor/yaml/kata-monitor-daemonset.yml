@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: kata-monitor
+  name: openshift-sandboxed-containers-monitor
   namespace: openshift-sandboxed-containers-operator
 spec:
   selector:
     matchLabels:
-      name: kata-monitor
+      name: openshift-sandboxed-containers-monitor
   template:
     metadata:
       labels:
-        name: kata-monitor
+        name: openshift-sandboxed-containers-monitor
       annotations:
         prometheus.io/scrape: "true"
     spec:
